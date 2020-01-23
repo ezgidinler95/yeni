@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Navi from "./Navi";
+import Catagory from "./Category";
+import Product from "./Product";
+import { Container, Col, Row } from "reactstrap";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  state = {
+    currentCategory: ""
+  };
+  changeCategory = category => {
+    this.setState({
+      currentCategory: category.categoryName
+    });
+  };
+
+  render() {
+    let productInfo = { title: "ProductList" };
+    let categoryInfo = { title: "CategoryList" };
+    return (
+      <div>
+        <Container>
+          <Row>
+            <Navi />
+          </Row>
+          <Row>
+            <Col xs="3">
+              <Catagory
+                changeCategory={this.changeCategory}
+                info={categoryInfo}
+                currentCategory={this.state.currentCategory}
+              />
+            </Col>
+            <Col xs="9">
+              <Product
+                info={productInfo}
+                currentCategory={this.state.currentCategory}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
 }
-
-export default App;
